@@ -121,7 +121,7 @@ Notes on Implementation
 1. Client-side Update (fl/feddyn.py)
 Each client minimizes a modified loss function that incorporates dynamic regularization to prevent drift from the global objective.
 <br>
-Local Loss Function: $L_total = L_task(𝝷;b) − ⟨𝝷_k^(t-1),𝝷⟩ + 1/2 * α​∥𝝷 - 𝝷_k^(t-1)​∥$
+Local Loss Function: $$L_total = L_task(𝝷;b) − ⟨𝝷_k^(t-1),𝝷⟩ + 1/2 * α​∥𝝷 - 𝝷_k^(t-1)​∥$$.
 $L_task$​: Standard Cross-Entropy loss on local batch.
 $⟨𝝷_k^(t-1)​,𝝷⟩$: Linear penalty term using the local gradient state.
 $1/2 * α * ∥𝝷 - 𝝷_k^(t-1)​∥$: Quadratic proximal term to keep the model close to the previous global state.
