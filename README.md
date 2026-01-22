@@ -152,11 +152,9 @@ where $\theta_k^{t+1}$ is the client model after local training and $\theta^{t}$
 The server maintains a global correction state $h$ and updates the global model using a corrected averaging scheme.
 
 (a) Server state $h$ update
-$$
-h^{t+1} = h^{t} - \alpha \cdot \frac{1}{|S_t|}\sum_{k\in S_t}(\theta_k^{t+1}-\theta^{t})
-$$
-	•	$S_t$: set of participating clients at round $t$.
-	•	The server state $h$ accumulates the average drift $(\theta_k^{t+1}-\theta^t)$ across participating clients.
+$$h^{t} = h^{t-1} - \alpha \cdot \frac{1}{m|}\sum_{k\in P_i}(\theta_k^{t}-\theta^{t-1})$$
+	•	$m$: Number of all clients
+	•	The server state $h$ accumulates the average drift $(\theta_k^{t}-\theta^{t-1})$ across participating clients.
 
 (b) Global model update
 For learnable parameters (weights/bias):
