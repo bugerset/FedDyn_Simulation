@@ -117,7 +117,7 @@ Key arguments (from utils/parser.py):
 ```
 
 Notes on Implementation
-```
+
 1. Client-side Update (fl/feddyn.py)
 Each client minimizes a modified loss function that incorporates dynamic regularization to prevent drift from the global objective.
 
@@ -163,7 +163,6 @@ t
  θ 
 k
 t+1
-```
 
 ## Expected Output
 
