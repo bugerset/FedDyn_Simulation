@@ -129,11 +129,11 @@ Each client minimizes a dynamically regularized objective to reduce client drift
 
 $L_{\text{total}}(\theta; b)$
 α
-$$𝝷_k^{t} = L_(total)(𝝷) - <g_k^(t-1), 𝝷> + 1/2 * {\alpha} * |\theta-\theta^{t-1}\|^2$$
+$$𝝷_k^{t} = L_(total)(𝝷) - <g_k^(t-1), 𝝷> + {0.5} {\alpha} * ||\theta-\theta^{t-1}\||^2$$
 
 - $L_{\text{task}}$: standard cross-entropy loss on local batch $b$.
 - $-\langle 𝝷_k^{t}, \theta \rangle$: linear correction term using the client-specific state $h_k^t$.
-- $\frac{\alpha}{2}\|\theta-\theta^{t}\|^2$: proximal term keeping the local model close to the global model $\theta^t$.
+- $\frac{\alpha}{2}\||\theta-\theta^{t}\||^2$: proximal term keeping the local model close to the global model $\theta^t$.
 
 **Optimizer:** SGD with `momentum=0.9`, `weight_decay=5e-4`.
 
@@ -152,7 +152,7 @@ where $\theta_k^{t+1}$ is the client model after local training and $\theta^{t}$
 The server maintains a global correction state $h$ and updates the global model using a corrected averaging scheme.
 
 (a) Server state $h$ update
-$$h^{t} = h^{t-1} - \alpha \cdot \frac{1}{m|}\sum_{k\in P_i}(\theta_k^{t}-\theta^{t-1})$$
+$$h^{t} = h^{t-1} - \alpha \cdot \frac{1}{m}\sum_{k\in P_i}(\theta_k^{t}-\theta^{t-1})$$
 	•	$m$: Number of all clients
 	•	The server state $h$ accumulates the average drift $(\theta_k^{t}-\theta^{t-1})$ across participating clients.
 
