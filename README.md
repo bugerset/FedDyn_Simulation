@@ -128,8 +128,8 @@ Each client minimizes a dynamically regularized objective to reduce client drift
 **Local objective (per client):**
 
 $L_{\text{total}}(\theta; b)$
-
-$$𝝷_k^{t} = L_(total)(𝝷) - <g_k^(t-1), 𝝷> + {\alpha}{2}\|\theta-\theta^{t-1}\|^2$$
+α
+$$𝝷_k^{t} = L_(total)(𝝷) - <g_k^(t-1), 𝝷> + 1/2 * {\alpha} * |\theta-\theta^{t-1}\|^2$$
 
 - $L_{\text{task}}$: standard cross-entropy loss on local batch $b$.
 - $-\langle 𝝷_k^{t}, \theta \rangle$: linear correction term using the client-specific state $h_k^t$.
@@ -140,11 +140,7 @@ $$𝝷_k^{t} = L_(total)(𝝷) - <g_k^(t-1), 𝝷> + {\alpha}{2}\|\theta-\theta^
 **Client state update (after local training):**
 
 $$
-g_k^{t+1} = h_k^{t} - \alpha(\theta_k^{t+1}-\theta^{t})
-$$
-
-$$
-h_k^{t+1} = h_k^{t} - \alpha(\theta_k^{t+1}-\theta^{t})
+g_k^{t} = g_k^{t-1} - \alpha(\theta_k^{t}-\theta^{t-1})
 $$
 
 where $\theta_k^{t+1}$ is the client model after local training and $\theta^{t}$ is the global model received at the start of round $t$.
