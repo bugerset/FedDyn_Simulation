@@ -15,22 +15,33 @@ State Management: Handling server state h and client states $g_k​, θ_k$
 
 Optimized Aggregation: Server-side update logic that specifically excludes BatchNorm parameters from FedDyn regularization to maintain stability.
 
-Folder Structure
-~~~ 
-├── main.py               # Main entry point for the simulation
-├── feddyn_experiment.py  # Single-client experiment script
+$$L_{total} = L_{task} - \langle g_k, \theta \rangle + \frac{\alpha}{2} \|\theta - \theta_k^t\|^2$$
+
+## Recommended Folder Structure
+
+Your `main.py` imports modules like `data.cifar10`, `fl.client`, etc.  
+So the easiest way to run without changing code is to organize files like this:
+```
+├── main.py
 ├── data/
-│   ├── cifar10.py        # Data loading for CIFAR-10
-│   └── partition.py      # IID/Non-IID partitioning logic
+│   ├── __init__.py
+│   ├── cifar10.py
+│	├── mnist.py
+│   └── partition.py
 ├── fl/
-│   ├── feddyn.py         # Local training with FedDyn loss
-│   └── server.py         # FedDyn server aggregation & h-state update
+│   ├── __init__.py
+│   ├── feddyn.py
+│   └── server.py
 ├── models/
-│   └── mobilenet.py      # MobileNet architecture (supports BN/GN)
+│   ├── __init__.py
+│   └── mobilenet.py
 └── utils/
-    ├── device.py         # Device selection (CPU/CUDA/MPS)
-    └── eval.py           # Evaluation metrics
-~~~
+ 	├── __init__.py
+ 	├── device.py
+    ├── eval.py
+    ├── parser.py
+    └── seed.py
+```
 
 ## Requirements
 
@@ -42,17 +53,13 @@ Run with default settings:
 ```bash
 python main.py
 ```
-Example: FedAvg + IID
+Example1: Non-IID
 ```bash
-python main.py --train fedavg --partition iid
+python main.py --partition niid
 ```
-Example: FedAvg + Non-IID (Dirichlet)
+Example2: Non-IID with control dyn-alpha
 ```bash
 python main.py --train fedavg --partition niid --alpha 0.5 --min-size 10
-```
-Example: FedProx (with mu)
-```bash
-python main.py --train fedprox --mu 0.1 --partition niid --alpha 0.5
 ```
 
 ## Device Selection
@@ -81,9 +88,8 @@ Key arguments (from utils/parser.py):
 	•	Training method
 	•	--dyn-alpha (FedDyn alpha, default 0.1)
 
-
 	•	Dataset
-	• --data-set (default cifar10, choices=[cifar10, mnist])
+	•   --data-set (default cifar10, choices=[cifar10, mnist])
 	•	--data-root (default ./data)
 	•	--augment (train-time augmentation)
 	•	--normalize / --no-normalize
@@ -107,7 +113,7 @@ Key arguments (from utils/parser.py):
 	•	--print-labels / --no-print-labels
 
 	•	Learning rate Scheduler (ReduceOnPlateau)
-	•	--lr-factor learning rate * factor (default 0.5)
+	•	--lr-factor (learning rate * factor, default 0.5)
 	•	--lr-patience (default 5)
 	•	--min-lr (deafult 1e-6)
 	•	--lr-threshold (default 1e-4)
@@ -116,9 +122,9 @@ Key arguments (from utils/parser.py):
 
 Notes on Implementation
 ```
-	•	Client training (fl/fedavg.py, fl/fedprox.py, fl/scaffold.py)
-	•	Uses SGD with momentum=0.9 and weight decay=5e-4 (In scaffold, no momentum and weight decay)
-	•	Returns the local state_dict moved to CPU (for aggregation)
+	•	Client training feddyn
+	•	Uses SGD with momentum=0.9 and weight decay=5e-4
+	•	Returns the local state_dict moved to CPU
 	•	Server aggregation (fl/server.py)
 	•	Weighted average of parameters using client dataset sizes
 	•	Non-IID partitioning (data/partition.py)
