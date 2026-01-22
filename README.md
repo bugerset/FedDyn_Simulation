@@ -119,7 +119,13 @@ Key arguments (from utils/parser.py):
 	•	--lr-threshold (default 1e-4)
 	•	--lr-cooldown (default 0)
 ```
+## FedDyn Implementation Notes
 
+1) Client-side Update (fl/feddyn.py)
+
+Each client minimizes a dynamically regularized objective to reduce client drift from the global optimum.
+
+Local objective (per client):
 $$
 L_{\text{total}}(\theta; b)
 
