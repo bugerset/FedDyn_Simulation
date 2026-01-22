@@ -116,53 +116,77 @@ Key arguments (from utils/parser.py):
 	•	--lr-cooldown (default 0)
 ```
 
-Notes on Implementation
+## FedDyn Implementation Notes
 
-1. Client-side Update (fl/feddyn.py)
-Each client minimizes a modified loss function that incorporates dynamic regularization to prevent drift from the global objective.
-<br>
-Local Loss Function: $$L_total = L_task(𝝷;b) − ⟨𝝷_k^(t-1),𝝷⟩ + 1/2 * α​∥𝝷 - 𝝷_k^(t-1)​∥$$.
-• $L_task$​: Standard Cross-Entropy loss on local batch.
-• $⟨𝝷_k^(t-1)​,𝝷⟩$: Linear penalty term using the local gradient state.
-• $1/2 * α * ∥𝝷 - 𝝷_k^(t-1)​∥$: Quadratic proximal term to keep the model close to the previous global state.
+### 1) Client-side Update (`fl/feddyn.py`)
 
-Optimizer: Uses SGD with momentum=0.9 and weight_decay=5e-4.
+Each client minimizes a **dynamically regularized** objective to reduce client drift from the global optimum.
 
-2. Server-side Aggregation (fl/server.py)
-The server maintains a global state h and updates the global model using a corrected averaging scheme.
+**Local objective (per client):**
 
-Server State 'h' Update: $h^(t+1)​=h t​−α( N1​k∈S t​∑​(θ kt+1​−θ t​))$
-The state h accumulates the average drift (Δθ) across all participating clients.
+\[
+L_{\text{total}}(\theta; b)
+=
+L_{\text{task}}(\theta; b)
+-
+\langle h_k^{t}, \theta \rangle
++
+\frac{\alpha}{2}\|\theta-\theta^{t}\|^2
+\]
 
-Global Model Update:
+- \(L_{\text{task}}\): standard cross-entropy loss on local batch \(b\).
+- \(-\langle h_k^{t}, \theta \rangle\): linear correction term using the client-specific state \(h_k^t\).
+- \(\frac{\alpha}{2}\|\theta-\theta^{t}\|^2\): proximal term that keeps the local model close to the current global model \(\theta^t\).
 
-For Learnable Parameters (Weights/Bias): θ t+1= ∣S t​∣1​k∈S t∑θ kt+1​− α1​h t+1
-​
- 
-Applies the FedDyn correction term to align with the global optimum.
+**Optimizer:** SGD with `momentum=0.9`, `weight_decay=5e-4`.
 
-For BatchNorm Buffers:
+**Client state update (after local training):**
 
-θ 
-t+1
-​
- = 
-∣S 
-t
-​
- ∣
-1
-​
-  
-k∈S 
-t
-​
- 
-∑
-​
- θ 
-k
-t+1
+\[
+h_k^{t+1} = h_k^{t} - \alpha(\theta_k^{t+1}-\theta^{t})
+\]
+
+where \(\theta_k^{t+1}\) is the client model after local training and \(\theta^{t}\) is the global model received at the start of round \(t\).
+
+---
+
+### 2) Server-side Aggregation (`fl/server.py`)
+
+The server maintains a global correction state \(h\) and updates the global model using a corrected averaging scheme.
+
+#### (a) Server state \(h\) update
+
+\[
+h^{t+1} = h^{t} - \alpha \cdot \frac{1}{|S_t|}\sum_{k\in S_t}(\theta_k^{t+1}-\theta^{t})
+\]
+
+- \(S_t\): set of participating clients at round \(t\).
+- The server state \(h\) accumulates the **average drift** \((\theta_k^{t+1}-\theta^t)\) across participating clients.
+
+#### (b) Global model update
+
+**For learnable parameters (weights/bias):**
+
+\[
+\theta^{t+1}
+=
+\frac{1}{|S_t|}\sum_{k\in S_t}\theta_k^{t+1}
+-
+\frac{1}{\alpha}h^{t+1}
+\]
+
+- First term: standard FedAvg aggregation.
+- Second term: FedDyn correction term that aligns optimization with the global objective.
+
+**For BatchNorm buffers (e.g., `running_mean`, `running_var`, `num_batches_tracked`):**
+
+\[
+\theta^{t+1}_{\text{BN}}
+=
+\frac{1}{|S_t|}\sum_{k\in S_t}\theta^{t+1}_{k,\text{BN}}
+\]
+
+BatchNorm buffers are aggregated by simple averaging (no FedDyn correction).
 
 ## Expected Output
 
