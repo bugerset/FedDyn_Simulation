@@ -157,13 +157,13 @@ $$h^{t} = h^{t-1} - \alpha \cdot \frac{1}{m}\sum_{k\in P_i}(\theta_k^{t}-\theta^
 (b) Global model update
 For learnable parameters (weights/bias):
 
-$$\\bar{\theta^{t}} = \frac{1}{P}\sum_{k\in P_i}\theta_k^{t}$$
+$$\\overline{\theta^{t}} = \frac{1}{P}\sum_{k\in P_i}\theta_k^{t}$$
 
 $$\theta^t = \\overline{\theta^{t}} - \frac{1}{\alpha}h^{t}$$
 
 For BatchNorm buffers (e.g., running_mean, running_var, num_batches_tracked):
 
-$$\theta^{t} = overline{\theta^{t}}$$
+$$\theta^{t} = \\overline{\theta^{t}}$$
 
 BatchNorm buffers are aggregated by simple averaging (no FedDyn correction).
 
