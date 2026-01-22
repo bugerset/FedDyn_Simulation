@@ -128,16 +128,11 @@ Each client minimizes a dynamically regularized objective to reduce client drift
 **Local objective (per client):**
 
 $L_{\text{total}}(\theta; b)$
-=
-L_{\text{task}}(\theta; b)
--
-\langle h_k^{t}, \theta \rangle
-+
-\frac{\alpha}{2}\|\theta-\theta^{t}\|^2
-$$
+
+$$𝝷_k^{t} = L_total(𝝷) - <g_k^(t-1), 𝝷> + {\alpha}{2}|\theta-\theta^{t-1}\|^2$$
 
 - $L_{\text{task}}$: standard cross-entropy loss on local batch $b$.
-- $-\langle h_k^{t}, \theta \rangle$: linear correction term using the client-specific state $h_k^t$.
+- $-\langle 𝝷_k^{t}, \theta \rangle$: linear correction term using the client-specific state $h_k^t$.
 - $\frac{\alpha}{2}\|\theta-\theta^{t}\|^2$: proximal term keeping the local model close to the global model $\theta^t$.
 
 **Optimizer:** SGD with `momentum=0.9`, `weight_decay=5e-4`.
