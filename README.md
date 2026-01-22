@@ -150,20 +150,20 @@ where $\theta_k^{t+1}$ is the client model after local training and $\theta^{t}$
 The server maintains a global correction state $h$ and updates the global model using a corrected averaging scheme.
 
 (a) Server state $h$ update:
-$$
-h^{t} = h^{t-1} - \alpha \cdot \frac{1}{m}\sum_{k\in P_i}(\theta_k^{t}-\theta^{t-1})
-$$<br>
+$$h^{t} = h^{t-1} - \alpha \cdot \frac{1}{m}\sum_{k\in P_i}(\theta_k^{t}-\theta^{t-1})$$<br>
 	•	$m$: Number of all clients<br>
 	•	The server state $$h$$ accumulates the average drift $$(\theta_k^{t}-\theta^{t-1})$$ across participating clients.
 
 (b) Global model update
 For learnable parameters (weights/bias):
 
-$$\theta^{t}\frac{1}{|P_i|}\sum_{k\in P_i}\theta_k^{t}\frac{1}{\alpha}h^{t+1}$$
+$$overline{\theta^{t}} = \frac{1}{P}\sum_{k\in P_i}\theta_k^{t}$$
+
+$$\theta^t = overline{\theta^{t}} - frac{1}{\alpha}h^{t}$$
 
 For BatchNorm buffers (e.g., running_mean, running_var, num_batches_tracked):
 
-$$\theta^{t+1}_{\text{BN}}\frac{1}{|S_t|}\sum_{k\in S_t}\theta^{t+1}_{k,\text{BN}}$$
+$$\theta^{t} = overline{\theta^{t}}$$
 
 BatchNorm buffers are aggregated by simple averaging (no FedDyn correction).
 
