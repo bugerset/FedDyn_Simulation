@@ -152,7 +152,7 @@ The server maintains a global correction state $h$ and updates the global model 
 (a) Server state $h$ update:
 $$h^{t} = h^{t-1} - \alpha \cdot \frac{1}{m}\sum_{k\in P_i}(\theta_k^{t}-\theta^{t-1})$$<br>
 	•	$m$: Number of all clients<br>
-	•	The server state $$h$$ accumulates the average drift $$(\theta_k^{t}-\theta^{t-1})$$ across participating clients.
+	•	The server state $$h$$ accumulates the average drift $$(\theta_k^{t}-\theta^{t-1})$$ across every participating clients.
 
 (b) Global model update
 For learnable parameters (weights/bias):
