@@ -9,7 +9,7 @@ FedDyn optimizes the global objective by dynamically updating a regularizer for 
 
 Data Partitioning: IID and Non-IID (Dirichlet distribution) splits.
 
-State Management: Handling server state **$h$** and client states **$ g_k​ , θ_k $** for dynamic regularization.
+State Management: Handling server state **$h$** and client states **$g_k​ , θ_k$** for dynamic regularization.
 
 Optimized Aggregation: Server-side update logic that specifically excludes BatchNorm parameters from FedDyn regularization to maintain stability.
 
