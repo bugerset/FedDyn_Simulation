@@ -121,27 +121,33 @@ Key arguments (from utils/parser.py):
 ```
 ## FedDyn Implementation Notes
 
-1) Client-side Update (fl/feddyn.py)
+### 1) Client-side Update (fl/feddyn.py)
 
 Each client minimizes a dynamically regularized objective to reduce client drift from the global optimum.
 
-Local objective (per client):
+**Local objective (per client):**
+
 $$
 L_{\text{total}}(\theta; b)
-
+=
 L_{\text{task}}(\theta; b)
-
+-
 \langle h_k^{t}, \theta \rangle
 +
-\frac{\alpha}{2}|\theta-\theta^{t}|^2
+\frac{\alpha}{2}\|\theta-\theta^{t}\|^2
 $$
-	•	$L_{\text{task}}$: standard cross-entropy loss on local batch $b$.
-	•	$-\langle h_k^{t}, \theta \rangle$: linear correction term using the client-specific state $h_k^t$.
-	•	$\frac{\alpha}{2}|\theta-\theta^{t}|^2$: proximal term that keeps the local model close to the global model $\theta^t$ received at the start of the round.
 
-Optimizer: SGD with momentum=0.9, weight_decay=5e-4.
+- $L_{\text{task}}$: standard cross-entropy loss on local batch $b$.
+- $-\langle h_k^{t}, \theta \rangle$: linear correction term using the client-specific state $h_k^t$.
+- $\frac{\alpha}{2}\|\theta-\theta^{t}\|^2$: proximal term keeping the local model close to the global model $\theta^t$.
 
-Client state update (after local training):
+**Optimizer:** SGD with `momentum=0.9`, `weight_decay=5e-4`.
+
+**Client state update (after local training):**
+
+$$
+h_k^{t+1} = h_k^{t} - \alpha(\theta_k^{t+1}-\theta^{t})
+$$
 
 $$
 h_k^{t+1} = h_k^{t} - \alpha(\theta_k^{t+1}-\theta^{t})
