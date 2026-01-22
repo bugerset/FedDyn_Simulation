@@ -118,13 +118,51 @@ Key arguments (from utils/parser.py):
 
 Notes on Implementation
 ```
-	•	Uses SGD with momentum=0.9 and weight decay=5e-4
-	•	Returns the local state_dict moved to CPU
-	•	Server aggregation (fl/server.py)
-	•	Weighted average of parameters using client dataset sizes
-	•	Non-IID partitioning (data/partition.py)
-	•	Uses a Dirichlet distribution per class across clients
-	•	Includes a safety loop to ensure each client has at least min_size samples
+1. Client-side Update (fl/feddyn.py)
+Each client minimizes a modified loss function that incorporates dynamic regularization to prevent drift from the global objective.
+
+Local Loss Function: $L_total = L_task(𝝷;b) − ⟨𝝷_k^(t-1),𝝷⟩ + 1/2 * α​∥𝝷 - 𝝷_k^(t-1)​∥$
+$L_task$​: Standard Cross-Entropy loss on local batch.
+$⟨𝝷_k^(t-1)​,𝝷⟩$: Linear penalty term using the local gradient state.
+$1/2 * α * ∥𝝷 - 𝝷_k^(t-1)​∥$: Quadratic proximal term to keep the model close to the previous global state.
+
+Optimizer: Uses SGD with momentum=0.9 and weight_decay=5e-4.
+
+2. Server-side Aggregation (fl/server.py)
+The server maintains a global state h and updates the global model using a corrected averaging scheme.
+
+Server State 'h' Update: $h^(t+1)​=h t​−α( N1​k∈S t​∑​(θ kt+1​−θ t​))$
+The state h accumulates the average drift (Δθ) across all participating clients.
+
+Global Model Update:
+
+For Learnable Parameters (Weights/Bias): θ t+1= ∣S t​∣1​k∈S t∑θ kt+1​− α1​h t+1
+​
+ 
+Applies the FedDyn correction term to align with the global optimum.
+
+For BatchNorm Buffers:
+
+θ 
+t+1
+​
+ = 
+∣S 
+t
+​
+ ∣
+1
+​
+  
+k∈S 
+t
+​
+ 
+∑
+​
+ θ 
+k
+t+1
 ```
 
 ## Expected Output
@@ -135,20 +173,3 @@ Each round prints evaluation results like:
 [01] acc=XX.XX%, loss=Y.YYYYYY
 =====================================
 ```
-
-python feddyn_experiment.py
-Core Arguments
-Argument	Default	Description
---train	feddyn	Federated learning algorithm to use
---dyn-alpha	0.05	Regularization strength α for FedDyn
---partition	niid	Data split method (iid or niid)
---alpha	0.5	Dirichlet concentration for Non-IID severity
---device	auto	Training device (cpu, cuda, or mps)
-
-Sheets로 내보내기
-
-Implementation Details
-
-
-BatchNorm Handling
-To ensure model stability, the server updates the global model by applying the FedDyn correction only to learnable parameters (weights and biases), while performing simple averaging for BatchNorm buffers (running_mean, running_var).
