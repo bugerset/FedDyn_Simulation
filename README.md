@@ -128,10 +128,8 @@ Each client minimizes a **dynamically regularized** objective to reduce client d
 
 **Local objective (per client):**
 
-$$
-L_{\text{total}}(\theta; b)
-=
-L_{\text{task}}(\theta; b)
+$L_{\text{total}}(\theta; b)$
+
 -
 \langle h_k^{t}, \theta \rangle
 +
