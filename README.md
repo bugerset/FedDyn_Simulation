@@ -1,7 +1,10 @@
-#FedDyn on CIFAR-10 and MNIST with MobileNet (PyTorch)#
-This repository provides a PyTorch implementation of FedDyn (Federated Learning based on Dynamic Regularization) using MobileNet on CIFAR-10 and MNIST datasets. It is designed to handle Non-IID data distributions effectively by introducing dynamic regularization to mitigate client drift.
 
-Project Overview
+# FedDyn on CIFAR-10 and MNIST with MobileNet (PyTorch) #
+
+This repository provides a PyTorch implementation of FedDyn (Federated Learning based on Dynamic Regularization) using MobileNet on CIFAR-10 and MNIST datasets. 
+It is designed to handle Non-IID data distributions effectively by introducing dynamic regularization to mitigate client drift.
+
+## Project Overview ##
 FedDyn optimizes the global objective by dynamically updating a regularizer for each client. This simulation covers:
 
 Data Partitioning: IID and Non-IID (Dirichlet distribution) splits.
