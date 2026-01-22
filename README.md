@@ -129,6 +129,7 @@ Each client minimizes a dynamically regularized objective to reduce client drift
 
 $$
 L_{\text{total}}(\theta; b)
+$$
 =
 L_{\text{task}}(\theta; b)
 -
