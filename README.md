@@ -55,7 +55,11 @@ python main.py --partition niid
 ```
 Example2: Non-IID with control dyn-alpha
 ```bash
-python main.py --train fedavg --partition niid --alpha 0.5 --min-size 10
+python main.py --partition niid --alpha 0.5 --min-size 10
+```
+Example3: Change the number and ratio of participating clients + local epoch
+```bash
+python main.py --num-clients 100 --client-frac 0.2 --local-epochs 5
 ```
 
 ## Device Selection
@@ -124,7 +128,7 @@ Each client minimizes a **dynamically regularized** objective to reduce client d
 
 **Local objective (per client):**
 
-\[
+$$
 L_{\text{total}}(\theta; b)
 =
 L_{\text{task}}(\theta; b)
@@ -132,7 +136,7 @@ L_{\text{task}}(\theta; b)
 \langle h_k^{t}, \theta \rangle
 +
 \frac{\alpha}{2}\|\theta-\theta^{t}\|^2
-\]
+$$
 
 - \(L_{\text{task}}\): standard cross-entropy loss on local batch \(b\).
 - \(-\langle h_k^{t}, \theta \rangle\): linear correction term using the client-specific state \(h_k^t\).
