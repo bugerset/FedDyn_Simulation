@@ -159,7 +159,7 @@ For learnable parameters (weights/bias):
 
 $$\\bar{\theta^{t}} = \frac{1}{P}\sum_{k\in P_i}\theta_k^{t}$$
 
-$$\theta^t = \\bar{\theta^{t}} - \frac{1}{\alpha}h^{t}$$
+$$\theta^t = \\overline{\theta^{t}} - \frac{1}{\alpha}h^{t}$$
 
 For BatchNorm buffers (e.g., running_mean, running_var, num_batches_tracked):
 
