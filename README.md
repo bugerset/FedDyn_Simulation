@@ -9,13 +9,9 @@ FedDyn optimizes the global objective by dynamically updating a regularizer for 
 
 Data Partitioning: IID and Non-IID (Dirichlet distribution) splits.
 
-State Management: Handling server state h and client states $g_k​, θ_k$
-​
-  for dynamic regularization.
+State Management: Handling server state **$h$** and client states **$ g_k​ , θ_k $** for dynamic regularization.
 
 Optimized Aggregation: Server-side update logic that specifically excludes BatchNorm parameters from FedDyn regularization to maintain stability.
-
-$$L_{total} = L_{task} - \langle g_k, \theta \rangle + \frac{\alpha}{2} \|\theta - \theta_k^t\|^2$$
 
 ## Recommended Folder Structure
 
@@ -122,7 +118,6 @@ Key arguments (from utils/parser.py):
 
 Notes on Implementation
 ```
-	•	Client training feddyn
 	•	Uses SGD with momentum=0.9 and weight decay=5e-4
 	•	Returns the local state_dict moved to CPU
 	•	Server aggregation (fl/server.py)
@@ -141,22 +136,6 @@ Each round prints evaluation results like:
 =====================================
 ```
 
-Requirements
-Python 3.9+
-PyTorch (with MPS or CUDA support)
-
-torchvision, numpy
-
-Usage
-Run with default settings (FedDyn + CIFAR-10):
-
-Bash
-
-python main.py --train feddyn --dyn-alpha 0.05 --num-clients 10 --client-frac 0.5
-For a single-client experiment to verify convergence:
-
-Bash
-
 python feddyn_experiment.py
 Core Arguments
 Argument	Default	Description
@@ -169,37 +148,7 @@ Argument	Default	Description
 Sheets로 내보내기
 
 Implementation Details
-FedDyn Loss Function
-Each client minimizes a local loss that includes a linear term and a quadratic proximal term:
 
-L 
-total
-​
- =L 
-task
-​
- −⟨g 
-k
-​
- ,θ⟩+ 
-2
-α
-​
- ∥θ−θ 
-k
-t
-​
- ∥ 
-2
- 
-where g 
-k
-​
-  is the local gradient state and θ 
-k
-t
-​
-  is the previous global model.
 
 BatchNorm Handling
 To ensure model stability, the server updates the global model by applying the FedDyn correction only to learnable parameters (weights and biases), while performing simple averaging for BatchNorm buffers (running_mean, running_var).
