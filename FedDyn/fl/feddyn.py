@@ -47,17 +47,10 @@ def local_train_feddyn(global_model, client_dataset, g_k, theta_prev, alpha=0.1,
             total_loss = loss - linear_term + (0.5 * alpha * prox_term)
             total_loss.backward()
             optimizer.step()
-    
-    state_dict_cpu = {}
-    for k, v in local_model.state_dict().items():
-        if torch.is_tensor(v):
-            state_dict_cpu[k] = v.detach().cpu()
-        else:
-            state_dict_cpu[k] = v
 
-    theta_k_new = {name: p.detach().cpu().clone() for name, p in local_model.state_dict().items()}
+    new_theta_k = {name: p.detach().cpu().clone() for name, p in local_model.state_dict().items()}
 
-    return state_dict_cpu, theta_k_new
+    return new_theta_k
 
 @torch.no_grad()
 def compute_delta(global_theta_prev, local_theta):
