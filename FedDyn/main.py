@@ -72,7 +72,7 @@ def main():
         deltas_list = []
 
         for cid in selected:
-            local_state_dict, new_theta_k = local_train_feddyn(
+            new_theta_k = local_train_feddyn(
                 global_model=global_model,
                 client_dataset=clients[cid],
                 g_k=client_gs[cid],
@@ -92,7 +92,7 @@ def main():
             client_gs[cid] = new_g_k
             client_thetas[cid] = new_theta_k
 
-            client_state_dicts.append(local_state_dict)
+            client_state_dicts.append(new_theta_k)
             theta_k_list.append(new_theta_k)
             deltas_list.append(local_delta)
             
