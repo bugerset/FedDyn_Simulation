@@ -174,4 +174,26 @@ Each round prints evaluation results like:
 === Evaluate global model 1 Round ===
 [01] acc=XX.XX%, loss=Y.YYYYYY
 ```
-With data_set="cifar10", num_clients=100, client_frac=0.25, local_epochs=5, batch_size=50, lr=1e-2, rounds=200, partition="niid", alpha=0.4, lr_patience=10, min_lr=1e-5
+
+With data_set="cifar10", num_clients=100, client_frac=0.25, local_epochs=5, batch_size=50, lr=1e-2, rounds=200, partition="niid", alpha=0.4, lr_patience=10, min_lr=1e-5:
+<br>83 Round ACC=60.65%, loss=1.122256
+<br>96 Round ACC=63.43%, loss=1.039685
+<br>106 Round ACC=65.97%, loss=1.004173
+<br>117 Round ACC=67.29%, loss=0.951618
+<br>128 Round ACC=68.31%, loss=0.939058
+<br>134 Round ACC=69.24%, loss=0.933948
+
+=== Evaluate global model Round 142 ===
+[142] acc=69.70%, loss=0.896229
+=== Evaluate global model Round 144 ===
+[144] acc=70.21%, loss=0.907815
+=== Evaluate global model Round 145 ===
+[145] acc=70.63%, loss=0.875592
+=== Evaluate global model Round 146 ===
+[146] acc=70.95%, loss=0.870979
+=== Evaluate global model Round 151 ===
+[151] acc=71.42%, loss=0.848190
+=== Evaluate global model Round 152 ===
+[152] acc=72.03%, loss=0.853616
+
+
