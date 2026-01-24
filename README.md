@@ -91,7 +91,7 @@ Key arguments (from utils/parser.py):
 	•	Dataset
 	•   --data-set (default cifar10, choices=[cifar10, mnist])
 	•	--data-root (default ./data)
-	•	--augment (train-time augmentation)
+	•	--augment / --no-augment
 	•	--normalize / --no-normalize
 	•	--test-batch-size (default 128)
 
