@@ -38,6 +38,6 @@ def parse_args():
     parser.add_argument("--lr-cooldown", type=int, default=0)
 
     # FedDyn alpha setting
-    parser.add_argument("--dyn-alpha", type=float, default=0.01)
+    parser.add_argument("--dyn-alpha", type=float, default=0.1)
 
     return parser.parse_args()
