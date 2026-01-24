@@ -174,3 +174,4 @@ Each round prints evaluation results like:
 === Evaluate global model 1 Round ===
 [01] acc=XX.XX%, loss=Y.YYYYYY
 ```
+With data_set="cifar10", num_clients=100, client_frac=0.25, local_epochs=5, batch_size=50, lr=1e-2, rounds=200, partition="niid", alpha=0.4, lr_patience=10, min_lr=1e-5
