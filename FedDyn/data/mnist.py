@@ -3,8 +3,8 @@ from torchvision import datasets, transforms
 def get_mnist(root="./data", normalize = True, augment = False):
 
     # Normalize MNIST with below values
-    mean = (0.1307)
-    std  = (0.3081)
+    mean = (0.1307,)
+    std  = (0.3081,)
 
     train_tf = []
 
@@ -12,7 +12,6 @@ def get_mnist(root="./data", normalize = True, augment = False):
         # RandomCrop & HorizontalFlip
         train_tf += [
             transforms.RandomCrop(32, padding=4),
-            transforms.RandomHorizontalFlip(),
         ]
 
     train_tf.append(transforms.ToTensor())
