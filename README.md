@@ -182,18 +182,16 @@ With data_set="cifar10", num_clients=100, client_frac=0.25, local_epochs=5, batc
 <br>117 Round ACC=67.29%, loss=0.951618
 <br>128 Round ACC=68.31%, loss=0.939058
 <br>134 Round ACC=69.24%, loss=0.933948
+<br>142 Round ACC=69.70%, loss=0.896229
+<br>144 Round ACC=70.21%, loss=0.907815
+<br>145 Round ACC=70.63%, loss=0.875592
+<br>151 Round ACC=71.42%, loss=0.848190
+<br>152 Round ACC=72.03%, loss=0.853616
+<br>159 Round ACC=72.41%, loss=0.816083
+<br>163 Round ACC=73.27%, loss=0.789843
+<br>167 Round ACC=73.91%, loss=0.774350
+<br>189 Round ACC=74.31%, loss=0.742489
+<br>200 Round ACC=75.38%, loss=0.723625
 
-=== Evaluate global model Round 142 ===
-[142] acc=69.70%, loss=0.896229
-=== Evaluate global model Round 144 ===
-[144] acc=70.21%, loss=0.907815
-=== Evaluate global model Round 145 ===
-[145] acc=70.63%, loss=0.875592
-=== Evaluate global model Round 146 ===
-[146] acc=70.95%, loss=0.870979
-=== Evaluate global model Round 151 ===
-[151] acc=71.42%, loss=0.848190
-=== Evaluate global model Round 152 ===
-[152] acc=72.03%, loss=0.853616
 
 
