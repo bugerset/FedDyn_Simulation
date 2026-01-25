@@ -81,42 +81,42 @@ python main.py --device auto
 Key arguments (from utils/parser.py):
 ```
 	•	Reproducibility / compute
-	•	--seed (default: 845)
-	•	--device in {auto,cpu,cuda,mps}
+		•	--seed (default: 845)
+		•	--device in {auto,cpu,cuda,mps}
 
 	•	Training method
-	•	--dyn-alpha (FedDyn alpha, default 0.1)
+		•	--dyn-alpha (FedDyn alpha, default 0.1)
 
 	•	Dataset
-	•   --data-set (default cifar10, choices=[cifar10, mnist])
-	•	--data-root (default ./data)
-	•	--augment / --no-augment
-	•	--normalize / --no-normalize
-	•	--test-batch-size (default 128)
+		•   --data-set (default cifar10, choices=[cifar10, mnist])
+		•	--data-root (default ./data)
+		•	--augment / --no-augment
+		•	--normalize / --no-normalize
+		•	--test-batch-size (default 128)
 
 	•	Federated learning config
-	•	--num-clients (default 10)
-	•	--client-frac fraction of clients sampled per round (default 0.25)
-	•	--local-epochs (default 1)
-	•	--batch-size (default 100)
-	•	--lr learning rate (default 1e-2)
-	•	--rounds communication rounds (default 10)
+		•	--num-clients (default 10)
+		•	--client-frac fraction of clients sampled per round (default 0.25)
+		•	--local-epochs (default 1)
+		•	--batch-size (default 100)
+		•	--lr learning rate (default 1e-2)
+		•	--rounds communication rounds (default 10)
 
 	•	Data partitioning
-	•	--partition in {iid,niid}
-	•	--alpha: Dirichlet concentration parameter controlling Non-IID severity.
-		    ├── α = 0.1 ~ 0.3: highly skewed label distribution (strong Non-IID)
-		  	├──	α = 0.5: moderate Non-IID (default)
-		  	└──	α = 0.8 ~ 1.0: closer to IID
-	•	--min-size minimum samples per client in non-IID (default 10)
-	•	--print-labels / --no-print-labels
+		•	--partition in {iid,niid}
+		•	--alpha: Dirichlet concentration parameter controlling Non-IID severity.
+		    	├── α = 0.1 ~ 0.3: highly skewed label distribution (strong Non-IID)
+		  		├──	α = 0.5: moderate Non-IID (default)
+		  		└──	α = 0.8 ~ 1.0: closer to IID
+		•	--min-size minimum samples per client in non-IID (default 10)
+		•	--print-labels / --no-print-labels
 
 	•	Learning rate Scheduler (ReduceOnPlateau)
-	•	--lr-factor (learning rate * factor, default 0.5)
-	•	--lr-patience (default 5)
-	•	--min-lr (deafult 1e-6)
-	•	--lr-threshold (default 1e-4)
-	•	--lr-cooldown (default 0)
+		•	--lr-factor (learning rate * factor, default 0.5)
+		•	--lr-patience (default 5)
+		•	--min-lr (deafult 1e-6)
+		•	--lr-threshold (default 1e-4)
+		•	--lr-cooldown (default 0)
 ```
 ## FedDyn Implementation Notes
 
@@ -179,15 +179,9 @@ With data_set="cifar10", num_clients=100, client_frac=0.25, local_epochs=5, batc
 <br>96 Round ACC=63.43%, loss=1.039685
 <br>106 Round ACC=65.97%, loss=1.004173
 <br>117 Round ACC=67.29%, loss=0.951618
-<br>128 Round ACC=68.31%, loss=0.939058
 <br>134 Round ACC=69.24%, loss=0.933948
-<br>142 Round ACC=69.70%, loss=0.896229
-<br>144 Round ACC=70.21%, loss=0.907815
 <br>145 Round ACC=70.63%, loss=0.875592
-<br>151 Round ACC=71.42%, loss=0.848190
-<br>152 Round ACC=72.03%, loss=0.853616
 <br>159 Round ACC=72.41%, loss=0.816083
-<br>163 Round ACC=73.27%, loss=0.789843
 <br>167 Round ACC=73.91%, loss=0.774350
 <br>189 Round ACC=74.31%, loss=0.742489
 <br>200 Round ACC=75.38%, loss=0.723625
