@@ -1,4 +1,3 @@
-
 # FedDyn on CIFAR-10 and MNIST with MobileNet (PyTorch)
 
 This repository provides a PyTorch implementation of FedDyn (Federated Learning based on Dynamic Regularization) using MobileNet on CIFAR-10 and MNIST datasets. 
