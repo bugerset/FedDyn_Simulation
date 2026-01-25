@@ -16,7 +16,7 @@ def parse_args():
     parser.add_argument("--no-normalize", dest="normalize", action="store_false")
     parser.add_argument("--test-batch-size", type=int, default=128)
 
-    # Client, Batch, Local Epochs, Communicate rounds setting0
+    # Client, Batch, Local Epochs, Communicate rounds setting
     parser.add_argument("--num-clients", type=int, default=10)
     parser.add_argument("--client-frac", type=float, default=0.25)
     parser.add_argument("--local-epochs", type=int, default=1)
